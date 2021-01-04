@@ -1,0 +1,255 @@
+12.6（NumberFormatException异常）
+import java.util.Scanner;
+public class hexToDec {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		System.out.print("Enter a hex number: ");
+		String hexString=input.nextLine();
+		try {
+			System.out.println("The decimal value for hex number "+hexString+" is "+hexToDec(hexString));
+		}
+		catch (NumberFormatException ex){
+			System.out.println(ex);
+			System.exit(1);
+		}
+	}
+
+	public static int hexToDec(String hexString) throws NumberFormatException{
+		int decimalvalue=0;
+		hexString=hexString.toUpperCase();
+		for(int i=0;i<hexString.length();i++) {
+			char hexStringChar=hexString.charAt(i);
+			if((hexStringChar>='A'&&hexStringChar<='F')||(hexStringChar>='0'&&hexStringChar<='9')) {
+				decimalvalue=decimalvalue*16+hexCharToDecimal(hexStringChar);
+			}
+			else {
+				throw new NumberFormatException("Wrong!");
+			}
+		}
+		return decimalvalue;
+	}
+	public static int hexCharToDecimal(char ch) {
+		if(ch>='A'&&ch<='F') {
+			return 10+ch-'A';
+		}
+		else {
+			return ch-'0';
+		}
+	}
+}
+
+
+
+
+
+12.7（NumberFormatException异常）
+法一：
+import java.util.Scanner;
+public class bin2Dec {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		System.out.print("Enter a binary number: ");
+		String binaryString=input.nextLine();
+		try {
+			System.out.println("The decimal value for binary number "+binaryString+" is "+bin2Dec(binaryString));
+		}
+		catch (NumberFormatException ex){
+			System.out.println(ex);
+			System.exit(1);
+		}
+	}
+	
+	public static int bin2Dec(String binaryString) throws NumberFormatException{
+		int decimalvalue=0;
+		for(int i=0;i<binaryString.length();i++) {
+			char binaryStringChar=binaryString.charAt(i);
+			if(binaryStringChar=='0'||binaryStringChar=='1') {
+				decimalvalue=decimalvalue*2+binCharToDeciml(binaryStringChar);
+			}
+			else {
+				throw new NumberFormatException("Wrong!");
+			}
+		}
+		return decimalvalue;
+	}
+	
+	public static int binCharToDeciml(char ch) {
+		return ch-'0';
+	}
+
+}
+
+法二：
+import java.util.Scanner;
+public class bin2Dec {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		System.out.print("Enter a binaray number: ");
+		String binarayString=input.nextLine();
+		try {
+			System.out.println("The decimal value for binaray number "+binarayString+" is "+binToDec(binarayString));
+		}
+		catch (NumberFormatException ex){
+			System.out.println("Exception: Wrong!");
+			System.exit(1);
+		}
+	}
+	
+	public static int binToDec(String binarayString){
+		return Integer.parseInt(binarayString,2);//Integer类的Integer.parseInt()方法可将二进制转化为十进制
+	}
+}
+
+
+
+
+
+12.8（HexFormatException异常）
+import java.util.Scanner;
+
+public class TesthexToDec{
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		System.out.print("Enter a hex number: ");
+		try {
+			HexToDecHexFormatException hexString=new HexToDecHexFormatException(input.next());
+			System.out.println("The decimal value for hex number " +hexString.getHexString()+" is "+hexString.hexToDec());
+		}catch (HexFormatException ex) {
+			System.out.println(ex);
+			System.exit(1);
+		}
+
+	}
+}
+class HexFormatException extends Exception{
+	private String hexString;
+	public HexFormatException(String hexString) {
+		super("HexFormatException: "+hexString);
+		this.hexString=hexString;
+	}
+
+	public String getHexString() {
+		return hexString;
+	}
+}
+
+class HexToDecHexFormatException{
+	private String hexString;
+	public HexToDecHexFormatException(String hexString) throws HexFormatException {
+		setHexString(hexString);
+	}
+
+	public void setHexString(String hexString) throws HexFormatException {
+		for (int i=0;i<hexString.length();i++) {
+			if (hexchar(hexString.charAt(i))==-1) {
+				throw new HexFormatException("Wrong!");
+			}
+		}
+
+		this.hexString=hexString;
+	}
+
+	public String getHexString() {
+		return hexString;
+	}
+
+	private int hexchar(char ch) {
+		if (ch>='0'&&ch<='9') {
+			return ch-'0';
+		} 
+		else if (ch>='A'&&ch<='F') {
+			return ch-'A'+10;
+		} 
+		else {
+			return -1;
+		}
+	}
+
+	public int hexToDec() {
+		int decimalvalue=0;
+		for (int i=hexString.length()-1;i>=0;i--) {
+			decimalvalue+=hexchar(hexString.charAt(i))*(Math.pow(16,(hexString.length()-i-1)));
+		}
+		return decimalvalue;
+	}
+}
+
+
+
+
+
+12.9（BinaryFormatException异常）
+import java.util.Scanner;
+public class Testbin2Dec {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		System.out.print("Enter a binary number: ");
+		String s=input.nextLine();
+		try {
+			System.out.print("The decimal value for binary number "+s+" is "+bin2Dec(s));
+		} catch (BinaryFormatException ex) {
+			System.out.print(ex);
+			System.exit(1);
+		}
+	}
+
+	public static int bin2Dec(String binString) throws BinaryFormatException {
+		int decimalvalue=0;
+		for (int i=0;i<binString.length();i++) {
+			char binStringChar=binString.charAt(i);
+			if (binStringChar=='0'||binStringChar=='1') {
+				decimalvalue=decimalvalue*2+binChar(binStringChar);
+			} 
+			else {
+				throw new BinaryFormatException("Wrong!");
+			}
+		}
+		return decimalvalue;
+	}
+	
+	public static int binChar(char ch) {
+		return ch-'0';
+	}
+}
+
+class BinaryFormatException extends Exception {
+	public BinaryFormatException(String s) {
+		super(s);
+	}
+}
+
+
+
+
+
+12.10（OutofMemoryError异常）
+import java.util.Scanner;
+import java.util.ArrayList;
+public class OutofMemoryError {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner input=new Scanner(System.in);
+		ArrayList<Integer> cityList=new ArrayList<>();
+		Integer value=100000;
+		while(true) {
+			value++;
+			try {
+				cityList.add(value);
+			}
+			catch (OutOfMemoryError ex){
+				System.out.println("Exception: Wrong!");
+				System.exit(1);
+			}
+		}
+	}
+
+}
